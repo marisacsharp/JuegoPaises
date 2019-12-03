@@ -3,13 +3,24 @@ using System.Collections.Generic;
 
 namespace LibreriasJuego
 {
-    interface Jugador
+    public class Jugador: IJugador
     {
+        internal Jugador(string nombre)
+        {
+            this.nombre = nombre;
+            this.HistoricoPartidas = new List<IPartida>();
+
+        }
         public string nombre { get; }
 
-        public List<Partida> HistoricoPartidas { get; }
+        public List<IPartida> HistoricoPartidas { get; }
 
-        public Partida nuevaPartida(Continente continenteElegido);
+        public IPartida nuevaPartida(IContinente continenteElegido)
+        {
+            Partida p = new Partida(this, continenteElegido);
+            this.HistoricoPartidas.Add(p);
+            return p;
+        }
         
     }
 }
